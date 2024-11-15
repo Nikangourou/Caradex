@@ -116,8 +116,8 @@ export function Garage() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Assurez-vous que le conteneur prend toute la hauteur disponible
-    backgroundColor: "#fff", // Ajustez si nécessaire
+    flex: 1, 
+    backgroundColor: "#fff", 
     padding: 10,
   },
 });

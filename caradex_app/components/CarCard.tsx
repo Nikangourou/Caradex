@@ -27,7 +27,6 @@ export function CarCard({ car } : { car: Car }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#f0f0f0',
-    marginVertical: 8,
     borderRadius: 8,
     overflow: 'hidden', // Ensures the rounded corners clip the background image
   },

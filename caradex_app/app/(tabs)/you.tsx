@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { View, StyleSheet, TouchableOpacity, FlatList } from "react-native";
 import { Garage } from "@/components/Garage";
 import { Profile } from "@/components/Profile";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,35 +17,39 @@ export default function YouScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <ThemedText type="title" style={styles.name}>
-              {DUMMY_USER.name}
-            </ThemedText>
-            <View style={styles.followersContainer}>
-              <ThemedText>{DUMMY_USER.xp} xp</ThemedText>
-              <ThemedText>{DUMMY_USER.following} following</ThemedText>
-              <ThemedText>{DUMMY_USER.followers} followers</ThemedText>
+      <FlatList
+        ListHeaderComponent={() => (
+          <View style={styles.container}>
+            <View style={styles.header}>
+              <ThemedText type="title" style={styles.name}>
+                {DUMMY_USER.name}
+              </ThemedText>
+              <View style={styles.followersContainer}>
+                <ThemedText>{DUMMY_USER.xp} xp</ThemedText>
+                <ThemedText>{DUMMY_USER.following} following</ThemedText>
+                <ThemedText>{DUMMY_USER.followers} followers</ThemedText>
+              </View>
+            </View>
+            <View style={styles.containerButtons}>
+              <TouchableOpacity
+                style={[styles.button, showGarage && styles.selectedButton]}
+                onPress={() => setShowGarage(true)}
+              >
+                <ThemedText type="button">Garage</ThemedText>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, !showGarage && styles.selectedButton]}
+                onPress={() => setShowGarage(false)}
+              >
+                <ThemedText type="button">Profil</ThemedText>
+              </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.containerButtons}>
-            <TouchableOpacity
-              style={[styles.button, showGarage && styles.selectedButton]}
-              onPress={() => setShowGarage(true)}
-            >
-              <ThemedText type="button">Garage</ThemedText>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, !showGarage && styles.selectedButton]}
-              onPress={() => setShowGarage(false)}
-            >
-              <ThemedText type="button">Profil</ThemedText>
-            </TouchableOpacity>
-          </View>
-          {showGarage ? <Garage /> : <Profile />}
-        </View>
-      </ScrollView>
+        )}
+        data={showGarage ? [{}] : [{}]}
+        renderItem={() => (showGarage ? <Garage /> : <Profile />)}
+        keyExtractor={(_, index) => index.toString()}
+      />
     </SafeAreaView>
   );
 }
@@ -53,9 +57,6 @@ export default function YouScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-  },
-  scrollViewContent: {
-    flexGrow: 1,
   },
   container: {
     flex: 1,
@@ -88,6 +89,6 @@ const styles = StyleSheet.create({
   },
   selectedButton: {
     borderBottomWidth: 2,
-    borderBottomColor: "#007bff", 
+    borderBottomColor: "#007bff",
   },
 });

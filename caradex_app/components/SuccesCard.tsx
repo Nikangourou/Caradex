@@ -27,9 +27,9 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 8,
     display: "flex",
-    flex: 1,
     flexDirection: "column",
     alignItems: "center",
+    height: 130,
   },
   name: {
     fontWeight: "bold",

@@ -65,7 +65,8 @@ export function Succes() {
 
 const styles = StyleSheet.create({
   container: {
-    // overflow: "hidden",
+    overflow: "hidden",
+    // backgroundColor: "red",
   },
   headder: {
     flexDirection: "row",
