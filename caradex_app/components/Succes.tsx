@@ -1,7 +1,8 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { StyleSheet, FlatList, View, Dimensions, Text } from "react-native";
+import { StyleSheet, View, Button } from "react-native";
 import { SuccesCard } from "@/components/SuccesCard";
 import { ThemedText } from "@/components/ThemedText";
+import { FlatGrid } from "react-native-super-grid";
+import { useState } from "react";
 
 const DUMMY_SUCCES = [
   {
@@ -42,35 +43,21 @@ const DUMMY_SUCCES = [
   },
 ];
 
-const numColumns = 3;
-const WIDTH = Dimensions.get("window").width;
-
-export type Succes = {
-  id: string;
-  name: string;
-  description: string;
-  points: number;
-};
-
-const GridItem = ({ item }: { item: Succes }) => (
-  <View style={[styles.item, { width: WIDTH / numColumns }]}>
-    <SuccesCard succes={item} />
-  </View>
-);
-
 export function Succes() {
+  const [showSucces, setShowSucces] = useState(false);
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { height: showSucces ? "auto" : 180 }]} >
       <View style={styles.headder}>
         <ThemedText type="title">Succès</ThemedText>
-        <ThemedText>Afficher tous les succès</ThemedText>
+        <Button
+          title={showSucces ? "Afficher moins" : "Afficher tout"}
+          onPress={() => setShowSucces(!showSucces)}
+        />
       </View>
-      <FlatList
+      <FlatGrid
         data={DUMMY_SUCCES}
-        renderItem={({ item }) => <GridItem item={item} />}
-        keyExtractor={(item) => item.id}
-        numColumns={numColumns}
-        scrollEnabled={false}
+        renderItem={({ item }) => <SuccesCard succes={item} />}
       />
     </View>
   );
@@ -78,19 +65,11 @@ export function Succes() {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    height: 180,
-
+    // overflow: "hidden",
   },
   headder: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end",
-  },
-  item: {
-    alignItems: "center",
-    justifyContent: "center",
-    margin: 5,
-    height: 140,
   },
 });

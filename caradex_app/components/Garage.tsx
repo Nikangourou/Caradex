@@ -1,38 +1,114 @@
-import { StyleSheet, FlatList, View, Dimensions } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { FlatGrid } from "react-native-super-grid";
 import { CarCard } from "@/components/CarCard";
 import { Stats } from "@/components/Stats";
 
-const DUMMY_CARS = [
-  { id: "1", make: "Toyota", model: "Corolla", year: 2018, status: "Possédée" },
-  { id: "2", make: "Honda", model: "Civic", year: 2015, status: "Ancienne" },
-  { id: "3", make: "Ford", model: "Mustang", year: 2022, status: "Conduite" },
-];
-
-const numColumns = 2;
-const WIDTH = Dimensions.get("window").width;
-
 export type Car = {
+  id: string;
   make: string;
   model: string;
   year: number;
   status: string;
+  url: string;
 };
 
-const GridItem = ({ item }: { item: Car }) => (
-  <View style={[styles.item, { width: WIDTH / numColumns }]}>
-    <CarCard car={item} />
-  </View>
-);
+const DUMMY_CARS: Car[] = [
+  {
+    id: "1",
+    make: "Volvo",
+    model: "850",
+    year: 1991,
+    status: "Possédée",
+    url: require("../assets/images/voitures/volvo.jpeg"),
+  },
+  {
+    id: "2",
+    make: "Mini",
+    model: "Cooper",
+    year: 1988,
+    status: "Posséde",
+    url: require("../assets/images/voitures/miniV.jpeg"),
+  },
+  {
+    id: "3",
+    make: "Renault",
+    model: "4l",
+    year: 1985,
+    status: "Possédée",
+    url: require("../assets/images/voitures/4l1.jpeg"),
+  },
+  {
+    id: "4",
+    make: "Citroen",
+    model: "Xantia",
+    year: 1998,
+    status: "Conduite",
+    url: require("../assets/images/voitures/xantia.jpeg"),
+  },
+  {
+    id: "5",
+    make: "Honda",
+    model: "Prelude",
+    year: 1992,
+    status: "Possédée",
+    url: require("../assets/images/voitures/prelude.jpeg"),
+  },
+  {
+    id: "6",
+    make: "BMW",
+    model: "e30",
+    year: 1985,
+    status: "Conduite",
+    url: require("../assets/images/voitures/bmE30.jpeg"),
+  },
+  {
+    id: "7",
+    make: "Wolkswagen",
+    model: "Up",
+    year: 2008,
+    status: "Possédée",
+    url: require("../assets/images/voitures/up.png"),
+  },
+  {
+    id: "8",
+    make: "Chevrolet",
+    model: "Corvette C3",
+    year: 1995,
+    status: "Vue",
+    url: require("../assets/images/voitures/corvetteC3.jpeg"),
+  },
+  {
+    id: "9",
+    make: "Renault",
+    model: "Megane",
+    year: 1999,
+    status: "Conduite",
+    url: require("../assets/images/voitures/megane.jpeg"),
+  },
+];
 
 export function Garage() {
+  // Fonction de comparaison pour trier les voitures
+  const sortCarsByStatus = (a: Car, b: Car) => {
+    const statusPriority: { [key: string]: number } = {
+      Posséde: 1,
+      Possédée: 2,
+      Conduite: 3,
+      Vue: 4,
+    };
+
+    return statusPriority[a.status] - statusPriority[b.status];
+  };
+
+  // Trier les voitures en utilisant la fonction de comparaison
+  const sortedCars = [...DUMMY_CARS].sort(sortCarsByStatus);
+
   return (
     <View style={styles.container}>
-      <Stats />
-      <FlatList
-        data={DUMMY_CARS}
-        renderItem={({ item }) => <GridItem item={item} />}
-        keyExtractor={(item) => item.id}
-        numColumns={numColumns} // Spécifiez le nombre de colonnes
+      <FlatGrid
+        itemDimension={130}
+        data={sortedCars}
+        renderItem={({ item }) => <CarCard car={item} />}
       />
     </View>
   );
@@ -42,12 +118,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1, // Assurez-vous que le conteneur prend toute la hauteur disponible
     backgroundColor: "#fff", // Ajustez si nécessaire
-  },
-  item: {
-    alignItems: "center",
-    justifyContent: "center",
-    margin: 5, // Espace entre les éléments
-    height: WIDTH / numColumns, // Maintenir un ratio 1:1 pour chaque élément
-    backgroundColor: 'red', // Juste pour visualiser les items, ajustez en conséquence
+    padding: 10,
   },
 });

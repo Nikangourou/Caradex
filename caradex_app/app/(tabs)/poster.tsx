@@ -1,5 +1,6 @@
 import React from "react";
 import { Image, View, Text, StyleSheet, FlatList, Button } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const DUMMY_USER = {
   name: "John Doe",
@@ -8,21 +9,25 @@ const DUMMY_USER = {
 };
 
 export default function Poster() {
-
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.name}>{DUMMY_USER.name}</Text>
-        <View style={styles.followersContainer}>
-          <Text>{DUMMY_USER.following} following</Text>
-          <Text>{DUMMY_USER.followers} followers</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.name}>{DUMMY_USER.name}</Text>
+          <View style={styles.followersContainer}>
+            <Text>{DUMMY_USER.following} following</Text>
+            <Text>{DUMMY_USER.followers} followers</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
