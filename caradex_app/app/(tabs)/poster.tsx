@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, TextInput, Button, Image, StyleSheet, Text, TouchableOpacity, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as ImagePicker from "expo-image-picker";
+import { Ionicons } from "@expo/vector-icons";
 
 const DUMMY_USER = {
   name: "John Doe",
@@ -58,6 +59,7 @@ export default function Poster() {
         />
         <TouchableOpacity style={styles.button} onPress={pickImage}>
           <Text style={styles.buttonText}>Choose Images</Text>
+          <Ionicons name="checkmark-circle" size={32} color="green" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={takePhoto}>
           <Text style={styles.buttonText}>Take Photo</Text>
