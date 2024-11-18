@@ -1,15 +1,21 @@
 import React from "react";
 import { View, FlatList, StyleSheet } from "react-native";
-import { PostCard } from "@/components/PostCard";
+import { PostCard, Post } from "@/components/PostCard";
+import { PostSuccesCard, Succes } from "@/components/PostSuccesCard";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const DUMMY_POSTS = [
+
+type Item = Post | Succes;
+
+
+const DUMMY_POSTS: Item[] = [
   {
     id: "1",
     user: "Loupitos",
     content: "Balade a Paris",
     likes: 22,
     images: [require("../../assets/images/posts/mini1.jpeg")],
+    type: "post",
   },
   {
     id: "2",
@@ -20,6 +26,7 @@ const DUMMY_POSTS = [
       require("../../assets/images/posts/c31.jpeg"),
       require("../../assets/images/posts/c32.jpeg"),
     ],
+    type: "post",
   },
   {
     id: "3",
@@ -27,12 +34,22 @@ const DUMMY_POSTS = [
     content: "Tournage avec Arthur",
     likes: 22,
     images: [require("../../assets/images/posts/arthur.jpeg")],
+    type: "post",
+  },
+  {
+    id: "99",
+    user: "Loupitos",
+    name: "Dixieme voiture",
+    points: 100,
+    description: "a ajouté sa dixième voiture à son garage !",
+    type: "succes",
   },
   {
     id: "4",
     user: "Loupitos",
     likes: 22,
     images: [require("../../assets/images/posts/prelude1.jpeg")],
+    type: "post",
   },
   {
     id: "5",
@@ -40,6 +57,7 @@ const DUMMY_POSTS = [
     content: "Promis j'ai pas pleuré",
     likes: 8,
     images: [require("../../assets/images/posts/volvo2.jpeg")],
+    type: "post",
   },
   {
     id: "6",
@@ -47,6 +65,7 @@ const DUMMY_POSTS = [
     content: "Le Mans Classic",
     likes: 22,
     images: [require("../../assets/images/posts/r3.jpeg")],
+    type: "post",
   },
   {
     id: "7",
@@ -54,6 +73,7 @@ const DUMMY_POSTS = [
     content: "L'epave",
     likes: 18,
     images: [require("../../assets/images/posts/bm1.jpeg")],
+    type: "post",
   },
   {
     id: "8",
@@ -61,6 +81,7 @@ const DUMMY_POSTS = [
     content: "3 roues t'as peur",
     likes: 22,
     images: [require("../../assets/images/posts/r2.jpeg")],
+    type: "post",
   },
   {
     id: "9",
@@ -68,6 +89,7 @@ const DUMMY_POSTS = [
     content: "Rallye de la mort",
     likes: 8,
     images: [require("../../assets/images/posts/r1.jpeg")],
+    type: "post",
   },
   {
     id: "10",
@@ -75,6 +97,7 @@ const DUMMY_POSTS = [
     content: "Vroum vroum dans les champs",
     likes: 18,
     images: [require("../../assets/images/posts/truck1.jpeg")],
+    type: "post",
   },
   {
     id: "11",
@@ -85,6 +108,7 @@ const DUMMY_POSTS = [
       require("../../assets/images/posts/volvo1.jpeg"),
       require("../../assets/images/posts/volvo3.jpeg"),
     ],
+    type: "post",
   },
   {
     id: "12",
@@ -92,22 +116,42 @@ const DUMMY_POSTS = [
     content: "La petite Elise",
     likes: 35,
     images: [require("../../assets/images/posts/cab1.jpeg")],
+    type: "post",
   },
   {
     id: "13",
     user: "Loupitos",
     likes: 35,
     images: [require("../../assets/images/posts/4l1.jpeg")],
+    type: "post",
   },
 ];
 
+function isPost(item: Item): item is Post {
+  return item.type === "post";
+}
+
+function isSucces(item: Item): item is Succes {
+  return item.type === "succes";
+}
+
 export default function FeedScreen() {
+  const renderItem = ({ item }: { item: Item }) => {
+    if (isPost(item)) {
+      return <PostCard post={item} />;
+    } else if (isSucces(item)) {
+      return <PostSuccesCard succes={item} />;
+    } else {
+      return null;
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <FlatList
           data={DUMMY_POSTS}
-          renderItem={({ item }) => <PostCard post={item} />}
+          renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />
       </View>
@@ -121,6 +165,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: "#f0f0f0",
   },
 });

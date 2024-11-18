@@ -47,7 +47,7 @@ export function Succes() {
   const [showSucces, setShowSucces] = useState(false);
 
   return (
-    <View style={[styles.container, { height: showSucces ? "auto" : 180 }]} >
+    <View style={[styles.container, { height: showSucces ? "auto" : 210 }]} >
       <View style={styles.headder}>
         <ThemedText type="title">Succès</ThemedText>
         <Button
@@ -66,11 +66,12 @@ export function Succes() {
 const styles = StyleSheet.create({
   container: {
     overflow: "hidden",
-    // backgroundColor: "red",
+    backgroundColor: "#fff",
   },
   headder: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end",
+    padding: 15,
   },
 });

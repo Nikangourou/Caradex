@@ -23,12 +23,30 @@ export default function TabLayout() {
           ),
         }}
       />
+        <Tabs.Screen
+        name="record"
+        options={{
+          title: 'Record',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'recording' : 'recording-outline'} color={color} />
+          ),
+        }}
+      />
        <Tabs.Screen
         name="poster"
         options={{
           title: 'Poster',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'add-circle' : 'add-circle-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="garage"
+        options={{
+          title: 'Garage',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'car' : 'car-outline'} color={color} />
           ),
         }}
       />

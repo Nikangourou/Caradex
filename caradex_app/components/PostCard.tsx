@@ -5,10 +5,12 @@ import { ThemedText } from "@/components/ThemedText";
 
 
 export type Post = {
+  id: string;
   user: string;
   content?: string;
   likes: number;
   images: any[];
+  type: string;
 }
 
 export function PostCard({ post }: { post: Post }) {
