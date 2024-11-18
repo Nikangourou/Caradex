@@ -1,20 +1,10 @@
 import React, { useState } from "react";
-import {
-  View,
-  TextInput,
-  Button,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { View, TextInput, Button, Image, StyleSheet, Text, TouchableOpacity, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as ImagePicker from "expo-image-picker";
 
 const DUMMY_USER = {
   name: "John Doe",
-  following: 42,
-  followers: 123,
 };
 
 export default function Poster() {
@@ -29,7 +19,7 @@ export default function Poster() {
     });
 
     if (!result.canceled && result.assets) {
-      setSelectedImages(result.assets);
+      setSelectedImages([...selectedImages, ...result.assets]);
     }
   };
 
@@ -58,7 +48,7 @@ export default function Poster() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <TextInput
           style={styles.input}
           placeholder="What's on your mind?"
@@ -74,15 +64,11 @@ export default function Poster() {
         </TouchableOpacity>
         <View style={styles.imageContainer}>
           {selectedImages.map((image, index) => (
-            <Image
-              key={index}
-              source={{ uri: image.uri }}
-              style={styles.image}
-            />
+            <Image key={index} source={{ uri: image.uri }} style={styles.image} />
           ))}
         </View>
         <Button title="Post" onPress={submitPost} />
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -92,7 +78,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    flex: 1,
+    flexGrow: 1,
     padding: 20,
     backgroundColor: "#fff",
   },
@@ -104,7 +90,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 10,
     borderRadius: 8,
-    textAlignVertical: "top", // for Android to properly align multiline text
+    textAlignVertical: "top",
   },
   button: {
     backgroundColor: "#007bff",

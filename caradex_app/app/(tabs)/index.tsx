@@ -4,9 +4,7 @@ import { PostCard, Post } from "@/components/PostCard";
 import { PostSuccesCard, Succes } from "@/components/PostSuccesCard";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-
 type Item = Post | Succes;
-
 
 const DUMMY_POSTS: Item[] = [
   {

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity, FlatList } from "react-native";
-import { Garage } from "@/components/Garage";
 import { Profile } from "@/components/Profile";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/ThemedText";
