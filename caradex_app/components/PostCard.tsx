@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, FlatList, Image, Dimensions, TouchableOpacity } from 'react-native';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import React, { useState } from "react";
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { ThemedText } from "@/components/ThemedText";
-
+import { useRouter } from 'expo-router';
 
 export type Post = {
   id: string;
@@ -11,26 +18,38 @@ export type Post = {
   likes: number;
   images: any[];
   type: string;
-}
+};
 
 export function PostCard({ post }: { post: Post }) {
-  const { width } = Dimensions.get('window');
+  const { width } = Dimensions.get("window");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const router = useRouter();
 
   const handleScroll = (event: any) => {
     const x = event.nativeEvent.contentOffset.x;
     setCurrentImageIndex(Math.round(x / (width - 30)));
-  }
+  };
+
+  const openUserProfile = () => {
+    router.push(`/user`);
+  };
 
   return (
     <View style={styles.container}>
-      <ThemedText style={styles.user}>{post.user}</ThemedText>
-      {post.content && <ThemedText style={styles.content}>{post.content}</ThemedText>}
+      <TouchableOpacity onPress={openUserProfile}>
+        <ThemedText style={styles.user}>{post.user}</ThemedText>
+      </TouchableOpacity>
+      {post.content && (
+        <ThemedText style={styles.content}>{post.content}</ThemedText>
+      )}
       <FlatList
         data={post.images}
         horizontal
         renderItem={({ item }) => (
-          <Image source={item} style={[styles.image, { width: width, height: width - 30 }]} />
+          <Image
+            source={item}
+            style={[styles.image, { width: width, height: width - 30 }]}
+          />
         )}
         keyExtractor={(item, index) => index.toString()}
         pagingEnabled
@@ -61,7 +80,7 @@ export function PostCard({ post }: { post: Post }) {
         </TouchableOpacity>
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -73,7 +92,7 @@ const styles = StyleSheet.create({
   },
   user: {
     paddingHorizontal: 15,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 5,
   },
   content: {
@@ -81,35 +100,34 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   likes: {
-    color: '#666',
+    color: "#666",
     marginLeft: 5,
   },
-  image: {
-  },
+  image: {},
   paginationContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     marginTop: 10,
   },
   paginationDot: {
     height: 8,
     width: 8,
     borderRadius: 4,
-    backgroundColor: '#ccc',
+    backgroundColor: "#ccc",
     marginHorizontal: 4,
   },
   activeDot: {
-    backgroundColor: '#000',
+    backgroundColor: "#000",
   },
   iconContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 10,
     paddingHorizontal: 15,
   },
   commentIcon: {
     marginLeft: 15,
-  }
+  },
 });
 
 export default PostCard;

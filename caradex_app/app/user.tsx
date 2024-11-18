@@ -12,7 +12,7 @@ const DUMMY_USER = {
   xp: 2242,
 };
 
-export default function YouScreen() {
+export default function User() {
   const [showGarage, setShowGarage] = useState(true);
 
   return (
@@ -30,10 +30,24 @@ export default function YouScreen() {
                 <ThemedText>{DUMMY_USER.followers} followers</ThemedText>
               </View>
             </View>
+            <View style={styles.containerButtons}>
+              <TouchableOpacity
+                style={[styles.button, showGarage && styles.selectedButton]}
+                onPress={() => setShowGarage(true)}
+              >
+                <ThemedText type="button">Garage</ThemedText>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, !showGarage && styles.selectedButton]}
+                onPress={() => setShowGarage(false)}
+              >
+                <ThemedText type="button">Profil</ThemedText>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
         data={showGarage ? [{}] : [{}]}
-        renderItem={() => (<Profile />)}
+        renderItem={() => (showGarage ? <Garage /> : <Profile />)}
         keyExtractor={(_, index) => index.toString()}
       />
     </SafeAreaView>

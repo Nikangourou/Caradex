@@ -42,7 +42,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="garage"
+        name="garageScreen"
         options={{
           title: 'Garage',
           tabBarIcon: ({ color, focused }) => (
